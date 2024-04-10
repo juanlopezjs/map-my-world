@@ -1,5 +1,5 @@
 {
-  "name": "node_template",
+  "name": "map-my-world",
   "version": "1.0.0",
   "description": "Template for node api rest ",
   "main": "src/index.js",

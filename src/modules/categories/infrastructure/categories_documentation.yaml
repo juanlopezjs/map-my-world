@@ -1,33 +1,31 @@
 openapi: '3.0.0'
 info:
     version: 1.0.0
-    title: Node_template_api
-    description: Api para el microservicios de usuarios
+    title: Swagger Categorias
+    description: Endpoint para la gestión de categorias
     termsOfService: http://swagger.io/terms/
     license:
         name: Apache 2.0
         url: https://www.apache.org/licenses/LICENSE-2.0.html
-servers:
-    - url: http://localhost:3000/api
 paths:
-    /users:
+    /api/categories:
         post:
-            description: Registro de usuarios
-            operationId: createUser
+            description: Registro de categorias
+            operationId: createCategory
             requestBody:
-                description: Los datos del usuario a registrar
+                description: Los datos de la categoria a registrar
                 required: true
                 content:
                     application/json:
                         schema:
-                            $ref: '#/components/schemas/User'
+                            $ref: '#/components/schemas/Categories'
             responses:
                 '200':
-                    description: user response
+                    description: category response
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/User'
+                                $ref: '#/components/schemas/Categories'
                 default:
                     description: unexpected error
                     content: 
@@ -35,15 +33,15 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/Error'
         get:
-            description: Lista los usuarios registrados
-            operationId: getAllUsers
+            description: Lista las categorias registradas
+            operationId: listCategories
             responses:
                 '200':
-                    description: user response
+                    description: category response
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/User'
+                                $ref: '#/components/schemas/Categories'
                 default:
                     description: unexpected error
                     content: 
@@ -53,20 +51,15 @@ paths:
     
 components:
     schemas:
-        User:
+        Categories:
             required:
                 - id
-                - firstName
-                - lastName
+                - name
             properties:
                 id:
                     readOnly: true
                     type: string
-                firstName:
-                    type: string
-                lastName:
-                    type: string
-                email:
+                name:
                     type: string
 
         Error:

@@ -5,10 +5,10 @@ module.exports = ({ config }) => {
     ...obj,
   });
 
-  const Success = (data) =>
-    defaultResponse("success", {
-      data,
-    });
+  const Success = (data) => {
+    const response = typeof data === "object" ? { data } : null;
+    return defaultResponse("success", response);
+  };
 
   const Fail = (data) =>
     defaultResponse("error", {

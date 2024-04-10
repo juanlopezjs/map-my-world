@@ -12,6 +12,6 @@ RUN npm install
 
 RUN npx sequelize-cli db:migrate
 
-EXPOSE 3000
+EXPOSE 3005
 
 CMD ["pm2-runtime", "--env", "production", "ecosystem.config.js"]

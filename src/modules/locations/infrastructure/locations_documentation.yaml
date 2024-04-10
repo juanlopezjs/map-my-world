@@ -1,0 +1,78 @@
+openapi: '3.0.0'
+info:
+    version: 1.0.0
+    title: Swagger Ubicaciones
+    description: Endpoint para la gestión de ubicaciones
+    termsOfService: http://swagger.io/terms/
+    license:
+        name: Apache 2.0
+        url: https://www.apache.org/licenses/LICENSE-2.0.html
+paths:
+    /api/locations:
+        post:
+            description: Registro de usuarios
+            operationId: createUser
+            requestBody:
+                description: Los datos del usuario a registrar
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Locations'
+            responses:
+                '200':
+                    description: location response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Locations'
+                default:
+                    description: unexpected error
+                    content: 
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Error'
+        get:
+            description: Lista las ubicaciones registrados
+            operationId: getAllUsers
+            responses:
+                default:
+                    description: unexpected error
+                    content: 
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Error'
+    
+components:
+    schemas:
+        Locations:
+            required:
+                - id
+                - latitude
+                - longitude
+            properties:
+                id:
+                    readOnly: true
+                    type: string
+                name:
+                    type: string
+                latitude:
+                    type: string
+                longitude:
+                    type: string
+
+        Error:
+            required:
+                - message
+                - error
+            properties:
+                message:
+                    type: string
+                error:
+                    type: boolean
+
+    securitySchemes:
+        ApiKeyAuth:
+            type: apiKey
+            in: header
+            name: X-API-Key

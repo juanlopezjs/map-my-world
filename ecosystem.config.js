@@ -1,3 +1,5 @@
+const { name } = require("./package.json");
+
 module.exports = {
   /**
    * Application configuration section
@@ -5,7 +7,7 @@ module.exports = {
    */
   apps: [
     {
-      name: "node_template",
+      name,
       script: "./src/index.js",
       error_file: "err.log",
       out_file: "out.log",
