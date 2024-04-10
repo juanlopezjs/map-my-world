@@ -1,12 +1,12 @@
 const controller = ({
-  listUsersApplication,
-  createUserApplication,
+  listCategoriesApplication,
+  createCategoryApplication,
   response: { Success },
 }) => ({
   index: async (req, res, next) => {
     try {
-      const users = await listUsersApplication();
-      res.status(200).json(Success(users));
+      const categories = await listCategoriesApplication();
+      res.status(200).json(Success(categories));
     } catch (error) {
       next(error);
     }
@@ -14,8 +14,8 @@ const controller = ({
   store: async (req, res, next) => {
     try {
       const { body } = req;
-      const user = await createUserApplication(body);
-      res.status(201).json(Success(user));
+      const category = await createCategoryApplication(body);
+      res.status(201).json(Success(category));
     } catch (error) {
       next(error);
     }

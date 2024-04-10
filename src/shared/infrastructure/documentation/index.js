@@ -1,6 +1,5 @@
 const path = require("path");
 const YAML = require("yamljs");
-const OpenApiValidator = require("express-openapi-validator");
 const swaggerUi = require("swagger-ui-express");
 const { glob } = require("glob");
 
@@ -17,19 +16,12 @@ module.exports = (app, renderStatic) => {
 
   apiSpec.forEach((item) => {
     const swaggerDocument = YAML.load(item);
-    const name = path.basename(item).replace(".yaml", "");
+    const name = path.basename(item).replace("_documentation.yaml", "");
 
     app.use(`/spec/${name}`, renderStatic(item));
     const jsonRoute = `/spec/${name}/json`;
     app.get(jsonRoute, (req, res) => res.json(swaggerDocument));
     options.swaggerOptions.urls.push({ url: jsonRoute, name });
-
-    app.use(
-      OpenApiValidator.middleware({
-        apiSpec: item,
-        validateResponses: false, // <-- to validate responses
-      })
-    );
   });
 
   app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(null, options));

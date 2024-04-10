@@ -1,0 +1,113 @@
+openapi: '3.0.0'
+info:
+    version: 1.0.0
+    title: Swagger Revisiones de Ubicación-Categoría
+    description: Endpoint para la gestión de revisiones
+    termsOfService: http://swagger.io/terms/
+    license:
+        name: Apache 2.0
+        url: https://www.apache.org/licenses/LICENSE-2.0.html
+paths:
+    /api/reviews:
+        post:
+            description: Registro de combinaciones
+            operationId: createReview
+            requestBody:
+                description: Los datos de la combinación a registrar
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Reviews'
+            responses:
+                '200':
+                    description: review response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Reviews'
+                default:
+                    description: unexpected error
+                    content: 
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Error'
+        get:
+            description: Lista de las combinaciones registradas que no han sido revisadas
+            operationId: listReviews
+            responses:
+                '200':
+                    description: review response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Reviews'
+                default:
+                    description: unexpected error
+                    content: 
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Error'
+    /api/reviews/:id:
+        patch:
+            description: Actualización de la combinación
+            operationId: createReview
+            parameters:
+                - $ref: '#/components/parameters/Id'
+            responses:
+                '200':
+                    description: review response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Reviews'
+                default:
+                    description: unexpected error
+                    content: 
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Error'
+components:
+    schemas:
+        Reviews:
+            required:
+                - id
+                - id_location
+                - id_category
+                - date_review
+            properties:
+                id:
+                    readOnly: true
+                    type: string
+                id_location:
+                    type: string
+                id_category:
+                    type: string
+                date_review:
+                    type: string
+                    format: date-time
+        Id:
+            type: string  
+
+        Error:
+            required:
+                - message
+                - error
+            properties:
+                message:
+                    type: string
+                error:
+                    type: boolean
+    parameters:
+        Id:
+            name: id
+            in: path
+            required: true
+            schema:
+                $ref: '#/components/schemas/Id'
+
+    securitySchemes:
+        ApiKeyAuth:
+            type: apiKey
+            in: header
+            name: X-API-Key

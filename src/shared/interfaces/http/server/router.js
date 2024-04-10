@@ -18,11 +18,22 @@ const router = (dep) => {
 
     apiRouter.use(cors()).use(compression());
 
+    const controllers = Object.keys(dep)
+      .filter((reg) => reg.endsWith("Controller"))
+      .reduce((obj, key) => {
+        const objInstance = obj;
+        objInstance[key] = dep[key];
+        return objInstance;
+      }, {});
+
     Object.keys(dep)
       .filter((reg) => reg.endsWith("Route"))
       .forEach((route) => {
-        const router = dep[route];
-        apiRouter.use(`/${route.replace("Route", "")}`, router({ apiRouter: Router(), ...dep }));
+        const routerInstance = dep[route];
+        apiRouter.use(
+          `/${route.replace("Route", "")}`,
+          routerInstance({ apiRouter: Router(), ...controllers })
+        );
       });
 
     routes.use("/api", apiRouter);

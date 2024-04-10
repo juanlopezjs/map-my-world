@@ -27,13 +27,14 @@ container.register({
 });
 
 container.loadModules([
-  [
-    "src/modules/*/infrastructure/*Route.js",
-    { register: asValue },
-  ],
+  ["src/modules/*/infrastructure/*Route.js", { register: asValue }],
   [
     "src/modules/*/infrastructure/*Controller.js",
     { register: asFunction, lifetime: Lifetime.SINGLETON },
+  ],
+  [
+    "src/modules/*/infrastructure/*DTO.js",
+    { register: asValue, lifetime: Lifetime.SINGLETON },
   ],
   [
     "src/modules/*/domain/*Repository.js",
